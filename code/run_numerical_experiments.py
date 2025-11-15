@@ -206,11 +206,12 @@ def run_numerical_experiments(sigma,
     ax.set_ylabel(r"$log_{10} \left( \frac{r_k}{r_0} \right)$")
     ax.minorticks_on()
     ax.set_axisbelow(True)
-    ax.loglog(np.arange(0, len(res_ratio_vals[0])), res_ratio_vals[0], label = "k = 6", color = "red", linewidth = 1.5, zorder = 3)
-    ax.loglog(np.arange(0, len(res_ratio_vals[1])), res_ratio_vals[1], label = "k = 7", color = "blue", linewidth = 1.5, zorder = 3)
-    ax.loglog(np.arange(0, len(res_ratio_vals[2])), res_ratio_vals[2], label = "k = 8", color = "green", linewidth = 1.5, zorder = 3)
-    ax.loglog(np.arange(0, len(res_ratio_vals[3])), res_ratio_vals[3], label = "k = 9", color = "cyan", linewidth = 1.5, zorder = 3)
- 
+    ax.plot(np.arange(0, len(res_ratio_vals[0])), res_ratio_vals[0], label = "k = 6", color = "red", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[1])), res_ratio_vals[1], label = "k = 7", color = "blue", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[2])), res_ratio_vals[2], label = "k = 8", color = "green", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[3])), res_ratio_vals[3], label = "k = 9", color = "cyan", linewidth = 1.5, zorder = 3)
+  
+    ax.set_yscale("log")
 
     plt.title("On-the-grid CG (with multigrid) applied to synthetic test case")
     ax.legend()
@@ -238,7 +239,7 @@ def run_numerical_experiments(sigma,
             start = perf_counter()
             u,v = V_cycle(x, y, Ix, Iy, reg_values[j], rhsu, rhsv, s1=3, s2=3, level=0, max_level=5) 
             stop = perf_counter()
-            print(f'Time for on-the-grid CG man closing car door (with multigrid) = {stop - start}')
+            print(f'Time for on-the-grid CG man closing car door (with multigrid) = {stop - start}, sigma = {sigma_values[i]}, lambda = {reg_values[j]}')
 
 
 
