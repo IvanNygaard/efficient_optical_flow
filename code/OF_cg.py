@@ -203,7 +203,7 @@ def cg(
         # 'tol' raised to power of 2 as we are dealing with norm squared
 
         # Store the residuals
-        relative_residuals_arr[it] = np.sqrt(rk1_rk1) / rr0
+        relative_residuals_arr[it] = np.sqrt(rk1_rk1) / np.sqrt(rr0)
 
         if rk1_rk1 / rr0 < tol**2:
             # So we index the residuals correctly afterwards

@@ -21,7 +21,6 @@ def run_numerical_experiments(sigma,
     k_vals = [6, 7, 8, 9] 
 
 
-    """
     # TEST I : sparse CG vs on-the-grid-CG for synthetic images of two Gaussian circeling each other for image sizes 2^k x 2^k, k = 6,7,8,9 
     res_ratio_vals = []
 
@@ -62,6 +61,7 @@ def run_numerical_experiments(sigma,
     'figure.titlesize': 20
     }) 
 
+
     fig, ax = plt.subplots(figsize=(10, 10))
  
     ax.set_xlabel(f"Iteration")  
@@ -84,9 +84,9 @@ def run_numerical_experiments(sigma,
     )
 
 
-    plt.title("Sparse CG (no multigrid)")
+    plt.title("Sparse CG (no multigrid) applied to synthetic test case")
     ax.legend()
-    plt.savefig("sparse_cg_no_multi_all_k.pdf", dpi=450, bbox_inches='tight')
+    plt.savefig("synthetic_sparse_cg_no_multi_all_k.pdf", dpi=450, bbox_inches='tight')
     plt.show()
  
 
@@ -140,9 +140,9 @@ def run_numerical_experiments(sigma,
     )
 
 
-    plt.title("On-the-grid CG (no multigrid)")
+    plt.title("On-the-grid CG (no multigrid) applied to synthetic test case")
     ax.legend() 
-    plt.savefig("grid_cg_no_multi_all_k.pdf", dpi=450, bbox_inches='tight')
+    plt.savefig("synthetic_grid_cg_no_multi_all_k.pdf", dpi=450, bbox_inches='tight')
     plt.show()
 
 
@@ -212,20 +212,21 @@ def run_numerical_experiments(sigma,
     ax.loglog(np.arange(0, len(res_ratio_vals[3])), res_ratio_vals[3], label = "k = 9", color = "cyan", linewidth = 1.5, zorder = 3)
  
 
-    plt.title("On-the-grid CG (with multigrid)")
+    plt.title("On-the-grid CG (with multigrid) applied to synthetic test case")
     ax.legend()
+    plt.savefig("cg_MULTIGRID_synthetic_images.pdf", dpi=450, bbox_inches='tight')
     plt.show()
 
 
 
     # TEST III: on-the-grid-cg with multigrid for provided test frames of man closing a car door. 
     # on-the-grid CG + multigrid
-    #sigma_values   = [1.0, 2.0, 5.0]           V-cycle diverges for these values
+    #sigma_values   = [1.0, 2.0, 5.0]           V-cycle diverges for smalle lambda than 5.0 for sigma = 1.0, these values
     #reg_values     = [1e-3, 1.0, 1e7]          
     res_ratio_vals = []
 
-    sigma_values = [1.0, 2.0, 5.0]
-    reg_values   = [4.0, 5.0, 1e7]
+    sigma_values = [2.0, 2.5, 5.0]
+    reg_values   = [5.0, 500, 1e7]
 
     for i in range(len(sigma_values)):
         for j in range(len(reg_values)):
@@ -237,7 +238,7 @@ def run_numerical_experiments(sigma,
             start = perf_counter()
             u,v = V_cycle(x, y, Ix, Iy, reg_values[j], rhsu, rhsv, s1=3, s2=3, level=0, max_level=5) 
             stop = perf_counter()
-            print(f'Time for on-the-grid CG (with multigrid) = {stop - start}, k = {k_vals[i]}')
+            print(f'Time for on-the-grid CG man closing car door (with multigrid) = {stop - start}')
 
 
 
@@ -281,23 +282,24 @@ def run_numerical_experiments(sigma,
     ax.set_ylabel(r"$log_{10} \left( \frac{r_k}{r_0} \right)$")
     ax.minorticks_on()
     ax.set_axisbelow(True)
-    ax.plot(np.arange(0, len(res_ratio_vals[0])), res_ratio_vals[0], label = f"$\sigma$ = {sigma_values[0]}, $\lambda = {reg_values[0]}$", color = "red", linewidth = 1.5, zorder = 3)
-    ax.plot(np.arange(0, len(res_ratio_vals[1])), res_ratio_vals[1], label = f"$\sigma$ = {sigma_values[0]}, $\lambda = {reg_values[1]}$", color = "blue", linewidth = 1.5, zorder = 3)
-    ax.plot(np.arange(0, len(res_ratio_vals[2])), res_ratio_vals[2], label = f"$\sigma$ = {sigma_values[0]}, $\lambda = {reg_values[2]}$", color = "green", linewidth = 1.5, zorder = 3)
-    ax.plot(np.arange(0, len(res_ratio_vals[3])), res_ratio_vals[3], label = f"$\sigma$ = {sigma_values[1]}, $\lambda = {reg_values[0]}$", color = "cyan", linewidth = 1.5, zorder = 3)
-    ax.plot(np.arange(0, len(res_ratio_vals[4])), res_ratio_vals[4], label = f"$\sigma$ = {sigma_values[1]}, $\lambda = {reg_values[1]}$", color = "crimson", linewidth = 1.5, zorder = 3)
-    ax.plot(np.arange(0, len(res_ratio_vals[5])), res_ratio_vals[5], label = f"$\sigma$ = {sigma_values[1]}, $\lambda = {reg_values[2]}$", color = "goldenrod", linewidth = 1.5, zorder = 3)
-    ax.plot(np.arange(0, len(res_ratio_vals[6])), res_ratio_vals[6], label = f"$\sigma$ = {sigma_values[2]}, $\lambda = {reg_values[0]}$", color = "indigo", linewidth = 1.5, zorder = 3) 
-    ax.plot(np.arange(0, len(res_ratio_vals[7])), res_ratio_vals[7], label = f"$\sigma$ = {sigma_values[2]}, $\lambda = {reg_values[1]}$", color = "darkorange", linewidth = 1.5, zorder = 3)
-    ax.plot(np.arange(0, len(res_ratio_vals[8])), res_ratio_vals[8], label = f"$\sigma$ = {sigma_values[2]}, $\lambda = {reg_values[2]}$", color = "slategray", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[0])), res_ratio_vals[0], label = fr"$\sigma$ = {sigma_values[0]}, $\lambda$ = {reg_values[0]}", color = "red", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[1])), res_ratio_vals[1], label = fr"$\sigma$ = {sigma_values[0]}, $\lambda$ = {reg_values[1]}", color = "blue", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[2])), res_ratio_vals[2], label = fr"$\sigma$ = {sigma_values[0]}, $\lambda$ = {reg_values[2]}", color = "green", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[3])), res_ratio_vals[3], label = fr"$\sigma$ = {sigma_values[1]}, $\lambda$ = {reg_values[0]}", color = "cyan", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[4])), res_ratio_vals[4], label = fr"$\sigma$ = {sigma_values[1]}, $\lambda$ = {reg_values[1]}", color = "crimson", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[5])), res_ratio_vals[5], label = fr"$\sigma$ = {sigma_values[1]}, $\lambda$ = {reg_values[2]}", color = "goldenrod", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[6])), res_ratio_vals[6], label = fr"$\sigma$ = {sigma_values[2]}, $\lambda$ = {reg_values[0]}", color = "indigo", linewidth = 1.5, zorder = 3) 
+    ax.plot(np.arange(0, len(res_ratio_vals[7])), res_ratio_vals[7], label = fr"$\sigma$ = {sigma_values[2]}, $\lambda$ = {reg_values[1]}", color = "darkorange", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[8])), res_ratio_vals[8], label = fr"$\sigma$ = {sigma_values[2]}, $\lambda$ = {reg_values[2]}", color = "slategray", linewidth = 1.5, zorder = 3)
 
     ax.set_yscale("log")
 
     plt.title("On-the-grid CG (with multigrid) on test frames of man closing car door")
     ax.legend()
+    plt.savefig("cardoor_multigriddifferentsigmaslambdas.pdf", dpi=450, bbox_inches='tight')
     plt.show()
 
-"""
+
 
     # TEST IV: on-the-grid conjugate gradient vs. pre-conditioned on the grid conjugate gradient 
     res_ratio_vals = []
@@ -318,7 +320,7 @@ def run_numerical_experiments(sigma,
                 rhsu, 
                 rhsv)
     stop = perf_counter()
-    print(f'Time for on-the-grid OF_CG (no multigrid) = {stop - start}')
+    print(f'Time non-preconditioned CG  = {stop - start}')
   
     u, v, res_ratio = cg_res[0], cg_res[1], cg_res[2]
  
@@ -332,7 +334,7 @@ def run_numerical_experiments(sigma,
     start = perf_counter()
     cg_res = pcg(x,y, Ix, Iy, lamb, rhsu, rhsv, 15, 15, 5)
     stop = perf_counter()
-    print(f'Time for on-the-grid OF_CG (no multigrid) = {stop - start}')
+    print(f'Time preconditioned CG = {stop - start}')
 
     u, v, res_ratio = cg_res[0], cg_res[1], cg_res[2]
 
@@ -351,7 +353,7 @@ def run_numerical_experiments(sigma,
     ax.minorticks_on()
     ax.set_axisbelow(True)
     ax.plot(np.arange(0, len(res_ratio_vals[0])), res_ratio_vals[0], label = "on-the-grid cg", color = "red", linewidth = 1.5, zorder = 3)
-    #ax.plot(np.arange(0, len(res_ratio_vals[1])), res_ratio_vals[1], label = "preconditioned on-the-grid-cg", color = "blue", linewidth = 1.5, zorder = 3)
+    ax.plot(np.arange(0, len(res_ratio_vals[1])), res_ratio_vals[1], label = "preconditioned on-the-grid-cg", color = "blue", linewidth = 1.5, zorder = 3)
  
     ax.set_yscale("log")
 
@@ -363,7 +365,7 @@ def run_numerical_experiments(sigma,
     )
 
 
-    plt.title("Non-preconditioned vs. preconditioned on-the-grid conjugate gradient")
+    plt.title(fr"Non-preconditioned vs. preconditioned on-the-grid CG, $\sigma$ = {sigma}, $\lambda$ = {lamb}")
     ax.legend() 
-    plt.savefig("grid_cg_no_multi_all_k.pdf", dpi=450, bbox_inches='tight')
+    plt.savefig("preconvsnonprecond.pdf", dpi=450, bbox_inches='tight')
     plt.show()

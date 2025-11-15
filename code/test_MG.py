@@ -27,7 +27,7 @@ def test_MG():
     print("rhsv: ", rhsv.shape)
 
     n, m = Ix.shape
-    lam = 4
+    lam = 5
     max_level = 5
 
     # rng = np.random.default_rng(0)

@@ -83,10 +83,12 @@ def pcg(
         r = norm(ru, rv)
         #print("Residual: ", r)
         #print("Rel Residual: ", r / r0)
-        relative_residuals.append(r / r0)
+
         if r / r0 < tol:
             it += 1
             break
+
+        relative_residuals.append(r / r0)
 
         # Solve Mz=r
         zu, zv = V_cycle(
