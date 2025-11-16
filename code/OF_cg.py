@@ -65,16 +65,8 @@ def OF_cg(
 
     # 2D Laplacian from Kroneckersum, https://stackoverflow.com/questions/34895970/buildin-a-sparse-2d-laplacian-matrix-using-scipy-modules
     ex = sp.eye(n)
-    # plt.spy(sp.kron(ex,Lx))
-    # plt.show()
     ey = sp.eye(m)
-    # plt.spy(sp.kron(Ly,ey))
-    # plt.show()
     L = sp.kron(ex, Lx) + sp.kron(Ly, ey)
-
-    # print(L.shape)
-    # plt.spy(L)
-    # plt.show()
 
     A_11 = sp.diags(Ix.ravel() ** 2) + L
     A_22 = sp.diags(Iy.ravel() ** 2) + L

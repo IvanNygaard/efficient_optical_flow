@@ -35,6 +35,9 @@ def preprocessing_test_images(
     I0, I1 = generate_test_image(100, 2)
     I0 = cv2.resize(I0, (2**k, 2**k))
     I1 = cv2.resize(I1, (2**k, 2**k))
+    #plt.imshow(I0)
+    #plt.imshow(I1)
+    plt.show()
 
     #print("I0: ", I0.shape)
     I0 = np.astype(I0, np.float64)
