@@ -143,7 +143,7 @@ def smoothing(
     n, m = v_pad.shape
 
     for _ in range(iterations):
-        # These two are invariant of each other
+        # These two are independent of each other
         black_update(u_pad, v_pad, Ix, Iy, lam, rhsu, h)
         red_update(v_pad, u_pad, Iy, Ix, lam, rhsv, h)
 
