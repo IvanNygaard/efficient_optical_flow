@@ -35,8 +35,11 @@ def preprocessing_test_images(
     I0, I1 = generate_test_image(100, 2)
     I0 = cv2.resize(I0, (2**k, 2**k))
     I1 = cv2.resize(I1, (2**k, 2**k))
+    #plt.imshow(I0)
+    #plt.imshow(I1)
+    plt.show()
 
-    print("I0: ", I0.shape)
+    #print("I0: ", I0.shape)
     I0 = np.astype(I0, np.float64)
     I1 = np.astype(I1, np.float64)
 
@@ -105,7 +108,7 @@ def preprocessing_image(
     assert dx == dy == dt
 
     h = dx
-    print(plt.imread("../reference_frames/frame10.png", "png"))
+    #print(plt.imread("../reference_frames/frame10.png", "png"))
     # Reading, smoothing and scaling of images
     I0 = sci.ndimage.gaussian_filter(
         plt.imread("../reference_frames/frame10.png", "png"), sigma
@@ -114,7 +117,7 @@ def preprocessing_image(
         plt.imread("../reference_frames/frame11.png", "png"), sigma
     )
 
-    print("I0: ", I0.shape)
+    #print("I0: ", I0.shape)
     I0 = np.astype(I0, np.float64)
     I1 = np.astype(I1, np.float64)
 

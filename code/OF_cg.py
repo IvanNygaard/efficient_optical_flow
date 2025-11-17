@@ -65,16 +65,8 @@ def OF_cg(
 
     # 2D Laplacian from Kroneckersum, https://stackoverflow.com/questions/34895970/buildin-a-sparse-2d-laplacian-matrix-using-scipy-modules
     ex = sp.eye(n)
-    # plt.spy(sp.kron(ex,Lx))
-    # plt.show()
     ey = sp.eye(m)
-    # plt.spy(sp.kron(Ly,ey))
-    # plt.show()
     L = sp.kron(ex, Lx) + sp.kron(Ly, ey)
-
-    # print(L.shape)
-    # plt.spy(L)
-    # plt.show()
 
     A_11 = sp.diags(Ix.ravel() ** 2) + L
     A_22 = sp.diags(Iy.ravel() ** 2) + L
@@ -93,6 +85,7 @@ def OF_cg(
     r0 = b - A @ x
     r_old = r0.copy()
     p = r_old.copy()
+
 
     while True:
         alpha = (r_old.T @ r_old) / ((A @ p).T @ p)
@@ -202,7 +195,7 @@ def cg(
         # 'tol' raised to power of 2 as we are dealing with norm squared
 
         # Store the residuals
-        relative_residuals_arr[it] = np.sqrt(rk1_rk1) / rr0
+        relative_residuals_arr[it] = np.sqrt(rk1_rk1) / np.sqrt(rr0)
 
         if rk1_rk1 / rr0 < tol**2:
             # So we index the residuals correctly afterwards
@@ -221,5 +214,5 @@ def cg(
         # Increase iteration counter
         it += 1
 
-    print("Itr: ", it)
+    #print("Itr: ", it)
     return u, v, relative_residuals_arr[:it]

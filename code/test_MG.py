@@ -20,7 +20,7 @@ def test_MG():
     """
 
     # Unpack data from preprocessing (spatial derivatives, temporal derivatives, etc.)
-    Ix, Iy, It, rhsu, rhsv, h = preprocessing_image(2, 1, 1, 1)
+    Ix, Iy, It, rhsu, rhsv, h = preprocessing_image(1, 1, 1, 1)
     print("Ix: ", Ix.shape)
     print("Iy: ", Iy.shape)
     print("rhsu: ", rhsu.shape)
@@ -104,6 +104,7 @@ def test_MG():
             max_level=max_level,
         )
         ru, rv = residual(u_itr, v_itr, Ix, Iy, lam, rhsu, rhsv, h)
+
         print("Residual V-cycle (Itr): ", norm(ru, rv))
 
     print(u_itr)

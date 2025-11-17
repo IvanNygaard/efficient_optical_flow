@@ -15,7 +15,7 @@ def pcg(
     s2=1,
     max_level=4,
     tol=1.0e-8,
-    maxitr=2000,
+    maxitr=4000,
     h: float = 1,
 ) -> tuple[np.ndarray, np.ndarray]:
     # Initialize
@@ -23,15 +23,18 @@ def pcg(
     ru = np.copy(rhs_u - Fu)
     rv = np.copy(rhs_v - Fv)
 
-    print("ru: ", ru)
-    print("rv: ", rv)
+    # Residualts (for experiments/plotting)
+    relative_residuals = []
+
+    #print("ru: ", ru)
+    #print("rv: ", rv)
     u = np.copy(u0)
     v = np.copy(v0)
 
     # Calculate the norm
     r0 = norm(ru, rv)
     r = r0  # To be updated in the iterations
-    print("r0: ", r0)
+    #print("r0: ", r0)
 
     assert ru.shape == rv.shape
 
@@ -78,10 +81,14 @@ def pcg(
 
         # Break condition
         r = norm(ru, rv)
-        print("Residual: ", r)
-        print("Rel Residual: ", r / r0)
+        #print("Residual: ", r)
+        #print("Rel Residual: ", r / r0)
+
         if r / r0 < tol:
+            it += 1
             break
+
+        relative_residuals.append(r / r0)
 
         # Solve Mz=r
         zu, zv = V_cycle(
@@ -96,4 +103,4 @@ def pcg(
         pu = np.copy(zu + beta * pu)
         pv = np.copy(zv + beta * pv)
 
-    return u, v
+    return u, v, relative_residuals

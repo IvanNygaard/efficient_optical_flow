@@ -565,6 +565,8 @@ if __name__ == "__main__":
     Ix, Iy = np.zeros((N, M)), np.zeros((N, M))
     rhsu, rhsv = np.zeros((N, M)), np.zeros((N, M))
     # smoothing(u, v, Ix, Iy, 1, rhsu, rhsv, 1, 1)
-    print(u)
+    #print(u)
     black_update(u, v, Ix, Iy, 1, rhsu, 1)
-    print(u)
+    #print(u)
+
+
